@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            $('#getVertices').click(function (e)
+            {
+                var uri = "api/triangle/GetTriangleVertices/";
+                uri += $("#inputCoordinates").val();
+
+                $("#getVerticesResult").val("");
+                $.ajax({
+                    type: "GET",
+                    url: uri,
+                    success: function (data)
+                    {
+                        $.each(data, function (i, item)
+                        {
+                            var result = "VERTEX 1: ";
+                            result += item[0].x + ", " + item[0].y;
+                            result += "\nVERTEX 2: ";
+                            result += item[1].x + ", " + item[1].y;
+                            result += "\nVERTEX 3: ";
+                            result += item[2].x + ", " + item[2].y;
+
+                            $("#getVerticesResult").val(result);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        $("#getVerticesResult").val(jqXHR.statusText);
+                    }
+                });
+            });
+
+            $('#getCoordinates').click(function (e)
+            {
+                var uri = "api/triangle/GetTriangleCoordinates/";
+                uri += $("#inputVertices").val();
+
+                $("#getVerticesResult").val("");
+                $.ajax({
+                    type: "GET",
+                    url: uri,
+                    success: function (data)
+                    {
+                        $.each(data, function (i, item)
+                        {
+                            var result = "COORDINATES: " + item;
+
+                            $("#getVerticesResult").val(result);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        $("#getVerticesResult").val(jqXHR.statusText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Triangle Test</h2>
+                <div class="row">
+                    <div class="col-sm-4">
+                        Enter coordinates<br />(example: 'A1')
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="inputCoordinates" />
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary" id="getVertices">Get Vertices</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-4">
+                        Enter Vertices<br />(V1X, V1Y, V2X, V2Y, V3X, V3Y)
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="inputVertices" />
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary" id="getCoordinates">Get Coordinates</button>
+                    </div>
+                </div>
+                <div>
+                    <br /><br />
+                    <textarea rows="4" cols="50" id="getVerticesResult">&nbsp;</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

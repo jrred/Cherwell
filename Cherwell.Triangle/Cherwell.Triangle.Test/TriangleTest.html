@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            $('#getVertices').click(function (e)
+            {
+                alert('chkpt 1'); // ?????????
+
+                $("#getVerticesResult").val("");
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "GET",
+                    datatype: 'json',
+                    url: "http://localhost:50108/api/triangle/GetTriangleVertices/D6",
+                    success: function (data, textStatus, jqXHR)
+                    {
+                        alert('DATA = ' + data); // ???????
+
+                        //data.forEach(function (person)
+                        //{
+                        //    $("#getVerticesResult").val($("#getVerticesResult").val() + person.name + "|");
+                        //});
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        $("#getVerticesResult").val(jqXHR.statusText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Get all people</h2>
+                <div>
+                    <button class="btn btn-default" id="getVertices">Get Vertices</button>
+                </div>
+                <div>
+                    <input type="text" class="form-control" id="getVerticesResult" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
